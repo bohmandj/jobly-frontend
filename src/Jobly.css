@@ -1,0 +1,14 @@
+.Jobly {
+    background-color: var(--main-bg-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding-top: 3.5rem;
+}
+
+@media (max-width: 768px) {
+    .Jobly {
+        padding-top: 4.5rem;
+    }
+}
