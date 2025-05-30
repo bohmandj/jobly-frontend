@@ -44,6 +44,7 @@ const Jobly = () => {
     }
 
     const login = async (loginFormData) => {
+        setIsLoading(true);
         const {
             username,
             password
@@ -51,10 +52,12 @@ const Jobly = () => {
         const returnedToken = await JoblyApi.loginUser(username, password);
         localStorage.setItem("token", returnedToken);
         await applyToken(returnedToken);
+        setIsLoading(false);
         navigate('/');
     }
 
     const register = async (registrationFormData) => {
+        setIsLoading(true);
         const {
             username,
             password,
@@ -65,6 +68,7 @@ const Jobly = () => {
         const returnedToken = await JoblyApi.registerUser(username, password, firstName, lastName, email);
         localStorage.setItem("token", returnedToken);
         await applyToken(returnedToken);
+        setIsLoading(false);
         navigate('/');
     }
 
@@ -76,6 +80,7 @@ const Jobly = () => {
     }
 
     const updateUser = async (profileFormData) => {
+        setIsLoading(true);
         const {
             firstName,
             lastName,
@@ -88,6 +93,7 @@ const Jobly = () => {
             lastName: returnedUser.lastName,
             email: returnedUser.email
         });
+        setIsLoading(false);
         navigate('/');
     }
 
