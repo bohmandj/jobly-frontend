@@ -26,7 +26,7 @@ const NavBar = () => {
                         <NavLink to="/profile">Profile</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink to="/" onClick={() => { logout() }}>Log out</NavLink>
+                        <NavLink to="/loading" onClick={() => { logout() }}>Log out</NavLink>
                     </NavItem>
                 </Nav>
                 : <Nav className="ml-auto nav-grid" navbar>
