@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
 import {
     Button,
     Form,
     Input
 } from "reactstrap";
 
-const SearchBar = ({ apiSearchFn, setIsLoading }) => {
+const SearchBar = ({ currentPageUrl, setSearchParams, setIsLoading }) => {
     /* Sign up form to take user info for site registration */
 
     const [formData, setFormData] = useState({});
+    // const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -21,7 +23,8 @@ const SearchBar = ({ apiSearchFn, setIsLoading }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        apiSearchFn(formData.query);
+        // navigate(`${currentPageUrl}?query=${formData.query}`);
+        setSearchParams({ 'search': formData.query });
     };
 
     return (

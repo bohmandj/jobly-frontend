@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useSearchParams } from 'react-router-dom';
 import JoblyContext from './JoblyContext';
 import JoblyApi from './api';
 import Loading from './Loading'
@@ -9,18 +9,21 @@ import SearchBar from './SearchBar';
 const JobsList = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [allJobs, setAllJobs] = useState([]);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const { currentUser } = useContext(JoblyContext);
 
-    const getJobs = async (query = "") => {
-        let jobs = await JoblyApi.getAllJobs(query);
+    const getJobs = async (searchTerm = "") => {
+        let jobs = await JoblyApi.getAllJobs(searchTerm);
         setAllJobs(jobs);
         setIsLoading(false);
     }
 
     useEffect(() => {
-        getJobs();
-    }, []);
+        const search = searchParams.get('search')
+        setIsLoading(true);
+        getJobs(search || "");
+    }, [searchParams]);
 
     if (isLoading) {
         return <Loading />;
@@ -32,7 +35,9 @@ const JobsList = () => {
 
     return (
         <div className='jobs-list container col-md-10 col-lg-8 col-xl-6 mx-auto'>
-            <SearchBar apiSearchFn={getJobs} setIsLoading={setIsLoading} />
+            <SearchBar setSearchParams={setSearchParams} currentPageUrl="/jobs" setIsLoading={setIsLoading} />
+            {searchParams.get('search')
+                && <h2 className='mt-4'>Current Search: "{searchParams.get('search')}"</h2>}
             {allJobs.map(job => (
                 <JobCard job={job} showCompanyName={true} key={job.id} />
             ))}
